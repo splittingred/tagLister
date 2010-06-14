@@ -23,5 +23,78 @@
  *
  * @package taglister
  */
+/**
+ * tagLister snippet
+ *
+ * @package taglister
+ */
+$tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
+if (!($tagLister instanceof TagLister)) return '';
 
-return '';
+/* setup default properties */
+$tpl = $modx->getOption('tpl',$scriptProperties,'tag');
+$tv = $modx->getOption('tv',$scriptProperties,'tags');
+$tvDelimiter = $modx->getOption('tvDelimiter',$scriptProperties,',');
+$target = $modx->getOption('target',$scriptProperties,1);
+$limit = $modx->getOption('limit',$scriptProperties,10);
+$sortBy = $modx->getOption('sortBy',$scriptProperties,'count');
+$sortDir = $modx->getOption('sortDir',$scriptProperties,'ASC');
+$cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
+$altCls = $modx->getOption('cls',$scriptProperties,'tl-tag-alt');
+$firstCls = $modx->getOption('firstCls',$scriptProperties,'');
+$lastCls = $modx->getOption('lastCls',$scriptProperties,'');
+
+/* get TV values */
+$c = $modx->newQuery('modTemplateVarResource');
+$c->innerJoin('modTemplateVar','TemplateVar');
+$tvPk = (int)$tv;
+if (!empty($tvPk)) {
+    $c->where(array('TemplateVar.id' => $tvPk));
+} else {
+    $c->where(array('TemplateVar.name' => $tv));
+}
+$tags = $modx->getCollection('modTemplateVarResource',$c);
+
+/* parse TV values */
+$output = array();
+$tagList = array();
+foreach ($tags as $tag) {
+   $v = $tag->get('value');
+   $vs = explode($tvDelimiter,$v);
+   foreach ($vs as $key) {
+      $key = trim($key);
+      if (empty($tagList[$key])) {
+         $tagList[$key] = 1;
+      } else { $tagList[$key]++; }
+   }
+}
+switch ($sortBy.'-'.$sortDir) {
+    case 'tag-ASC': ksort($tagList); break;
+    case 'tag-DESC': krsort($tagList); break;
+    case 'count-DESC': asort($tagList); break;
+    case 'count-ASC': default: arsort($tagList); break;
+}
+
+$i = 0;
+foreach ($tagList as $tag => $count) {
+    if ($i >= $limit) break;
+    $tagCls = $cls.($i % 2 ? ' '.$altCls : '');
+    if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
+    if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
+
+    $output[] = $tagLister->getChunk($tpl,array(
+        'tag' => $tag,
+        'count' => $count,
+        'target' => $target,
+        'cls' => $tagCls,
+    ));
+    $i++;
+}
+
+$output = implode("\n",$output);
+$toPlaceholder = $modx->getOption('toPlaceholder',$scriptProperties,false);
+if (!empty($toPlaceholder)) {
+    $modx->setPlaceholder($toPlaceholder,$output);
+    return '';
+}
+return $output;

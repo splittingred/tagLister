@@ -24,7 +24,7 @@
  * @package taglister
  */
 /**
- * @package archivist
+ * @package taglister
  * @subpackage build
  */
 function getSnippetContent($filename) {
