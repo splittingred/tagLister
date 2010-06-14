@@ -2,7 +2,7 @@
 Snippet: tagLister
 --------------------
 Version: 1.0.0
-Created: June 15th, 2010
+Created: June 14th, 2010
 Author: Shaun McCormick <shaun@modxcms.com>
 License: GNU GPLv2 (or later at your option)
 
