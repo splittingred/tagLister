@@ -57,6 +57,13 @@ $properties = array(
         'value' => '',
     ),
     array(
+        'name' => 'tagVar',
+        'desc' => 'The REQUEST var to use in the links generated for each tag result.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tag',
+    ),
+    array(
         'name' => 'sortBy',
         'desc' => 'Field to sort by. Defaults to count. Can be either tag or count.',
         'type' => 'list',
@@ -81,7 +88,21 @@ $properties = array(
         'desc' => 'Limits the number of resources returned. Defaults to 10.',
         'type' => 'textfield',
         'options' => '',
-        'value' => '10',
+        'value' => 10,
+    ),
+    array(
+        'name' => 'includeDeleted',
+        'desc' => 'Include tags from deleted Resources in the results.',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => false,
+    ),
+    array(
+        'name' => 'includeUnpublished',
+        'desc' => 'Include tags from unpublished Resources in the results.',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => false,
     ),
     array(
         'name' => 'cls',

@@ -2,4 +2,5 @@ Changelog for tagLister.
 
 tagLister 1.0.0
 ===============
+- Added includeDeleted, includeUnpublished, and tagVar properties
 - Initial commit.

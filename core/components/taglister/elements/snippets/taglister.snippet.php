@@ -36,6 +36,7 @@ $tpl = $modx->getOption('tpl',$scriptProperties,'tag');
 $tv = $modx->getOption('tv',$scriptProperties,'tags');
 $tvDelimiter = $modx->getOption('tvDelimiter',$scriptProperties,',');
 $target = $modx->getOption('target',$scriptProperties,1);
+$tagVar = $modx->getOption('tagVar',$scriptProperties,'tag');
 $limit = $modx->getOption('limit',$scriptProperties,10);
 $sortBy = $modx->getOption('sortBy',$scriptProperties,'count');
 $sortDir = $modx->getOption('sortDir',$scriptProperties,'ASC');
@@ -47,11 +48,19 @@ $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
 /* get TV values */
 $c = $modx->newQuery('modTemplateVarResource');
 $c->innerJoin('modTemplateVar','TemplateVar');
+$c->innerJoin('modResource','Resource');
 $tvPk = (int)$tv;
 if (!empty($tvPk)) {
     $c->where(array('TemplateVar.id' => $tvPk));
 } else {
     $c->where(array('TemplateVar.name' => $tv));
+}
+
+if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
+    $c->where(array('Resource.deleted' => 0));
+}
+if (!$modx->getOption('includeUnpublished',$scriptProperties,false)) {
+    $c->where(array('Resource.published' => 1));
 }
 $tags = $modx->getCollection('modTemplateVarResource',$c);
 
@@ -84,6 +93,7 @@ foreach ($tagList as $tag => $count) {
 
     $output[] = $tagLister->getChunk($tpl,array(
         'tag' => $tag,
+        'tagVar' => $tagVar,
         'count' => $count,
         'target' => $target,
         'cls' => $tagCls,

@@ -39,7 +39,7 @@ set_time_limit(0);
 define('PKG_NAME','tagLister');
 define('PKG_NAME_LOWER','taglister');
 define('PKG_VERSION','1.0.0');
-define('PKG_RELEASE','beta1');
+define('PKG_RELEASE','rc1');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)).'/';
