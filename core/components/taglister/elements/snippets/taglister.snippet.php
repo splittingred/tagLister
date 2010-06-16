@@ -41,7 +41,7 @@ $limit = $modx->getOption('limit',$scriptProperties,10);
 $sortBy = $modx->getOption('sortBy',$scriptProperties,'count');
 $sortDir = $modx->getOption('sortDir',$scriptProperties,'ASC');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
-$altCls = $modx->getOption('cls',$scriptProperties,'tl-tag-alt');
+$altCls = $modx->getOption('altCls',$scriptProperties,'tl-tag-alt');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
 

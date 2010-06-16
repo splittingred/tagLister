@@ -42,4 +42,28 @@ $properties = include $sources['properties'].'properties.taglister.php';
 $snippets[1]->setProperties($properties);
 unset($properties);
 
+$snippets[2]= $modx->newObject('modSnippet');
+$snippets[2]->fromArray(array(
+    'id' => 2,
+    'name' => 'tolinks',
+    'description' => 'Builds links from tags.',
+    'snippet' => getSnippetContent($sources['elements'].'snippets/tolinks.snippet.php'),
+),'',true,true);
+$properties = include $sources['properties'].'properties.tolinks.php';
+//$properties = adjustProperties($modx,$properties,$sources['lexicon']);
+$snippets[2]->setProperties($properties);
+unset($properties);
+
+$snippets[3]= $modx->newObject('modSnippet');
+$snippets[3]->fromArray(array(
+    'id' => 3,
+    'name' => 'getResourcesTag',
+    'description' => 'Wraps the getResources and getPage snippets to do tag-based navigation. Requires both of those snippets to run.',
+    'snippet' => getSnippetContent($sources['elements'].'snippets/getresourcestag.snippet.php'),
+),'',true,true);
+$properties = include $sources['properties'].'properties.getresourcestag.php';
+//$properties = adjustProperties($modx,$properties,$sources['lexicon']);
+$snippets[3]->setProperties($properties);
+unset($properties);
+
 return $snippets;

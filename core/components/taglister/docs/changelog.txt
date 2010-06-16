@@ -2,5 +2,7 @@ Changelog for tagLister.
 
 tagLister 1.0.0
 ===============
+- Added tolinks and getResourcesTag snippets
+- Fixed altCls parameter issue
 - Added includeDeleted, includeUnpublished, and tagVar properties
 - Initial commit.
