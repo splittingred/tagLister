@@ -43,14 +43,10 @@ $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 $items = explode($inputDelim,$items);
 $tags = array();
 foreach ($items as $item) {
-    $item = trim($item);
-    $url = $modx->makeUrl($target,'','?'.$key.'='.$item);
-    $url = str_replace(' ','+',$url);
-    $tags[] = $tagLister->getChunk($tpl,array(
-        'url' => $url,
-        'item' => $item,
-        'cls' => $cls,
-    ));
+    $itemArray['text'] = trim($item);
+    $itemArray['url'] = $modx->makeUrl($target,'','?'.$key.'='.$itemArray['text']);
+    $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
+    $itemArray['cls'] = $cls;
+    $tags[] = $tagLister->getChunk($tpl,$itemArray);
 }
-
 return trim(implode($outputDelim,$tags),$outputDelim);

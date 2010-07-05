@@ -36,6 +36,13 @@ $properties = array(
         'value' => '',
     ),
     array(
+        'name' => 'tpl',
+        'desc' => 'Name of a Chunk that will be used for each result.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'link',
+    ),
+    array(
         'name' => 'target',
         'desc' => 'The ID of the Resource that links will point to. Defaults to the current Resource.',
         'type' => 'textfield',
@@ -62,6 +69,13 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => 'tag',
+    ),
+    array(
+        'name' => 'cls',
+        'desc' => 'Name of a CSS class to add to each result.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tl-tag',
     ),
 );
 return $properties;
