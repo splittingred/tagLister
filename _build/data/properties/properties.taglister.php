@@ -139,5 +139,12 @@ $properties = array(
         'options' => '',
         'value' => '',
     ),
+    array(
+        'name' => 'outputSeparator',
+        'desc' => 'The separator for output for each result.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => "\n",
+    ),
 );
 return $properties;

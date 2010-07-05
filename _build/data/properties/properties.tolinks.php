@@ -77,5 +77,12 @@ $properties = array(
         'options' => '',
         'value' => 'tl-tag',
     ),
+    array(
+        'name' => 'toPlaceholder',
+        'desc' => 'If set, will set the output of this snippet to this placeholder rather than output it.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+    ),
 );
 return $properties;
