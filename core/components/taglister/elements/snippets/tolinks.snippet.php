@@ -28,12 +28,17 @@
  *
  * @package taglister
  */
+$tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
+if (!($tagLister instanceof TagLister)) return '';
+
 $items = $modx->getOption('items',$scriptProperties,'');
 if (empty($items)) return '';
 $inputDelim = $modx->getOption('inputDelim',$scriptProperties,',');
 $outputDelim = $modx->getOption('outputDelim',$scriptProperties,', ');
 $key = $modx->getOption('key',$scriptProperties,'tag');
 $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $modx->resource->get('id');
+$tpl = $modx->getOption('tpl',$scriptProperties,'link');
+$cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 
 $items = explode($inputDelim,$items);
 $tags = array();
@@ -41,7 +46,11 @@ foreach ($items as $item) {
     $item = trim($item);
     $url = $modx->makeUrl($target,'','?'.$key.'='.$item);
     $url = str_replace(' ','+',$url);
-    $tags[] = '<a href="'.$url.'">'.$item.'</a>';
+    $tags[] = $tagLister->getChunk($tpl,array(
+        'url' => $url,
+        'item' => $item,
+        'cls' => $cls,
+    ));
 }
 
 return trim(implode($outputDelim,$tags),$outputDelim);
