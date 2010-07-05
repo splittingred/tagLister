@@ -77,6 +77,8 @@ foreach ($tags as $tag) {
       } else { $tagList[$key]++; }
    }
 }
+
+/* sort */
 switch ($sortBy.'-'.$sortDir) {
     case 'tag-ASC': ksort($tagList); break;
     case 'tag-DESC': krsort($tagList); break;
@@ -84,6 +86,7 @@ switch ($sortBy.'-'.$sortDir) {
     case 'count-ASC': default: arsort($tagList); break;
 }
 
+/* iterate */
 $i = 0;
 foreach ($tagList as $tag => $count) {
     if ($i >= $limit) break;
@@ -101,7 +104,9 @@ foreach ($tagList as $tag => $count) {
     $i++;
 }
 
-$output = implode("\n",$output);
+/* output */
+$outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
+$output = implode($outputSeparator,$output);
 $toPlaceholder = $modx->getOption('toPlaceholder',$scriptProperties,false);
 if (!empty($toPlaceholder)) {
     $modx->setPlaceholder($toPlaceholder,$output);

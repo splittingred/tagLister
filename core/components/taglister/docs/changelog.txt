@@ -2,6 +2,8 @@ Changelog for tagLister.
 
 tagLister 1.0.0
 ===============
+- Added outputSeparator property to taglister
+- Added toPlaceholder property to tolinks
 - Added tpl, cls properties to tolinks
 - Added tolinks and getResourcesTag snippets
 - Fixed altCls parameter issue

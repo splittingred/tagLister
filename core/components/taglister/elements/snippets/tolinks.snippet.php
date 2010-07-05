@@ -31,8 +31,7 @@
 $tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
 if (!($tagLister instanceof TagLister)) return '';
 
-$items = $modx->getOption('items',$scriptProperties,'');
-if (empty($items)) return '';
+/* setup default properties */
 $inputDelim = $modx->getOption('inputDelim',$scriptProperties,',');
 $outputDelim = $modx->getOption('outputDelim',$scriptProperties,', ');
 $key = $modx->getOption('key',$scriptProperties,'tag');
@@ -40,13 +39,27 @@ $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $m
 $tpl = $modx->getOption('tpl',$scriptProperties,'link');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 
+/* get items */
+$items = $modx->getOption('items',$scriptProperties,'');
+if (empty($items)) return '';
 $items = explode($inputDelim,$items);
+
+/* iterate */
 $tags = array();
 foreach ($items as $item) {
-    $itemArray['text'] = trim($item);
+    $itemArray = array();
+    $itemArray['item'] = trim($item);
     $itemArray['url'] = $modx->makeUrl($target,'','?'.$key.'='.$itemArray['text']);
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);
 }
-return trim(implode($outputDelim,$tags),$outputDelim);
+
+/* output */
+$toPlaceholder = $modx->getOption('toPlaceholder',$scriptProperties,false);
+$output = trim(implode($outputDelim,$tags),$outputDelim);
+if ($toPlaceholder) {
+    $modx->setPlaceholder($toPlaceholder,$output);
+    return '';
+}
+return $output;
