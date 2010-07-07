@@ -49,7 +49,7 @@ $tags = array();
 foreach ($items as $item) {
     $itemArray = array();
     $itemArray['item'] = trim($item);
-    $itemArray['url'] = $modx->makeUrl($target,'','?'.$key.'='.$itemArray['text']);
+    $itemArray['url'] = $modx->makeUrl($target,'','?'.$key.'='.$itemArray['item']);
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);
