@@ -29,10 +29,14 @@
  *
  * @package taglister
  */
+$tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
+$tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
+$grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
+
 if (!empty($_GET['tag'])) {
-    $scriptProperties['tvFilters'] = 'tags==%'.$modx->stripTags($_GET['tag']).'%';
+    $scriptProperties['tvFilters'] = $tagKey.'==%'.$modx->stripTags($_GET[$tagRequestParam]).'%';
 }
-$elementObj = $modx->getObject('modSnippet', array('name' => 'getPage'));
+$elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));
 if ($elementObj) {
     $elementObj->setCacheable(false);
     $output = $elementObj->process($scriptProperties);

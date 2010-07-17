@@ -252,6 +252,20 @@ $properties = array(
         'options' => '',
         'value' => '<li class="control"><a[[+classes]][[+title]] href="[[+href]]">&gt;&gt;</a></li>',
     )
+    ,array(
+        'name' => 'tagKey',
+        'desc' => 'The key to set the tags filter by.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tags',
+    )
+    ,array(
+        'name' => 'tagRequestParam',
+        'desc' => 'The REQUEST param key being sent that will be the value for the tags filter.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tag',
+    )
 );
 
 return $properties;
