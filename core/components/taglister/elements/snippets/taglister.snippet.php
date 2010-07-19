@@ -45,7 +45,7 @@ $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 $altCls = $modx->getOption('altCls',$scriptProperties,'tl-tag-alt');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
-$all = $modx->getOption('all',$scriptProperties,true);
+$all = $modx->getOption('all',$scriptProperties,false);
 
 /* get TV values */
 $c = $modx->newQuery('modTemplateVarResource');
