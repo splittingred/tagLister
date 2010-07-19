@@ -2,6 +2,10 @@ Changelog for tagLister.
 
 tagLister 1.0.2
 ===============
+- Added all, allTpl, and allText properties to tagLister snippet for listing an 'All Tags' result
+- Fixed bug in getResourcesTag snippet with tagRequestParam variable
+- Changed tolinks &key to &tagRequestParam (with backwards compat)
+- i18n of snippet properties
 - Added tagKey and tagRequestParam properties to getResourcesTag snippet
 - Fixed bug in tolinks snippet
 

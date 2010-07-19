@@ -34,7 +34,8 @@ if (!($tagLister instanceof TagLister)) return '';
 /* setup default properties */
 $inputDelim = $modx->getOption('inputDelim',$scriptProperties,',');
 $outputDelim = $modx->getOption('outputDelim',$scriptProperties,', ');
-$key = $modx->getOption('key',$scriptProperties,'tag');
+$key = $modx->getOption('key',$scriptProperties,'tag'); /* backwards compat */
+$tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,$key);
 $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $modx->resource->get('id');
 $tpl = $modx->getOption('tpl',$scriptProperties,'link');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
@@ -49,7 +50,7 @@ $tags = array();
 foreach ($items as $item) {
     $itemArray = array();
     $itemArray['item'] = trim($item);
-    $itemArray['url'] = $modx->makeUrl($target,'','?'.$key.'='.$itemArray['item']);
+    $itemArray['url'] = $modx->makeUrl($target,'','?'.$tagRequestParam.'='.$itemArray['item']);
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);

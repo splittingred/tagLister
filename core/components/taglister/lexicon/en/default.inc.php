@@ -24,23 +24,8 @@
  * @package taglister
  */
 /**
- * Wrap the getPage/getResources call to implement tagging. Needs getPage and
- * getResources to be installed to work.
+ * Default English lexicon for tagLister
  *
  * @package taglister
  */
-$tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
-$tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
-$grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
-
-if (!empty($_GET[$tagRequestParam])) {
-    $scriptProperties['tvFilters'] = $tagKey.'==%'.$modx->stripTags($_GET[$tagRequestParam]).'%';
-}
-$elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));
-if ($elementObj) {
-    $elementObj->setCacheable(false);
-    $output = $elementObj->process($scriptProperties);
-} else {
-    return 'You must have getPage and getResources downloaded and installed to use this snippet.';
-}
-return $output;
+$_lang['all_tags'] = 'All Tags';

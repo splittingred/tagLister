@@ -30,6 +30,7 @@
  */
 $tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
 if (!($tagLister instanceof TagLister)) return '';
+$modx->lexicon->load('taglister:default');
 
 /* setup default properties */
 $tpl = $modx->getOption('tpl',$scriptProperties,'tag');
@@ -44,6 +45,7 @@ $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 $altCls = $modx->getOption('altCls',$scriptProperties,'tl-tag-alt');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
+$all = $modx->getOption('all',$scriptProperties,true);
 
 /* get TV values */
 $c = $modx->newQuery('modTemplateVarResource');
@@ -87,7 +89,8 @@ switch ($sortBy.'-'.$sortDir) {
 }
 
 /* iterate */
-$i = 0;
+$totalTags = 0;
+$i = $all ? 1 : 0;
 foreach ($tagList as $tag => $count) {
     if ($i >= $limit) break;
     $tagCls = $cls.($i % 2 ? ' '.$altCls : '');
@@ -101,7 +104,24 @@ foreach ($tagList as $tag => $count) {
         'target' => $target,
         'cls' => $tagCls,
     ));
+    $totalTags += $count;
     $i++;
+}
+
+if ($all) {
+    $allTpl = $modx->getOption('allTpl',$scriptProperties,'all');
+    $allChunk = $tagLister->getChunk($allTpl,array(
+        'tag' => !empty($scriptProperties['allText']) ? $scriptProperties['allText'] : $modx->lexicon('all_tags'),
+        'tagVar' => $tagVar,
+        'count' => $totalTags,
+        'target' => $target,
+        'cls' => $cls,
+    ));
+    if ($modx->getOption('allPosition',$scriptProperties,'B') == 'T') {
+        array_unshift($output,$allChunk);
+    } else {
+        array_push($output,$allChunk);
+    }
 }
 
 /* output */
