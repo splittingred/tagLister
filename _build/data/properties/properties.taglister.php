@@ -99,6 +99,22 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     ),
     array(
+        'name' => 'parents',
+        'desc' => 'prop_taglister.parents_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
+        'name' => 'depth',
+        'desc' => 'prop_taglister.depth_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 10,
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
         'name' => 'includeDeleted',
         'desc' => 'prop_taglister.includedeleted_desc',
         'type' => 'combo-boolean',

@@ -47,6 +47,16 @@ $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
 $all = $modx->getOption('all',$scriptProperties,false);
 
+/* parents support */
+$parents = isset($parents) ? explode(',', $parents) : array();
+$depth = isset($depth) ? (integer) $depth : 10;
+$children = array();
+foreach ($parents as $parent) {
+    $pchildren = $modx->getChildIds($parent, $depth);
+    if (!empty($pchildren)) $children = array_merge($children, $pchildren);
+}
+if (!empty($children)) $parents = array_merge($parents, $children);
+
 /* get TV values */
 $c = $modx->newQuery('modTemplateVarResource');
 $c->innerJoin('modTemplateVar','TemplateVar');
@@ -57,7 +67,11 @@ if (!empty($tvPk)) {
 } else {
     $c->where(array('TemplateVar.name' => $tv));
 }
-
+if (!empty($parents)) {
+    $c->where(array(
+        'Resource.parent:IN' => $parents,
+    ));
+}
 if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
     $c->where(array('Resource.deleted' => 0));
 }
@@ -65,6 +79,7 @@ if (!$modx->getOption('includeUnpublished',$scriptProperties,false)) {
     $c->where(array('Resource.published' => 1));
 }
 $tags = $modx->getCollection('modTemplateVarResource',$c);
+echo $c->toSql();
 
 /* parse TV values */
 $output = array();
