@@ -79,7 +79,6 @@ if (!$modx->getOption('includeUnpublished',$scriptProperties,false)) {
     $c->where(array('Resource.published' => 1));
 }
 $tags = $modx->getCollection('modTemplateVarResource',$c);
-echo $c->toSql();
 
 /* parse TV values */
 $output = array();
