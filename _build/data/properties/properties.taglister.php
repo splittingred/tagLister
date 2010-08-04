@@ -131,6 +131,14 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     ),
     array(
+        'name' => 'where',
+        'desc' => 'prop_taglister.where_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
         'name' => 'cls',
         'desc' => 'prop_taglister.cls_desc',
         'type' => 'textfield',

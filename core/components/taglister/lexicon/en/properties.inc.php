@@ -50,6 +50,7 @@ $_lang['prop_taglister.parents_desc'] = 'Optional. Comma-delimited list of ids s
 $_lang['prop_taglister.depth_desc'] = 'Integer value indicating depth to search for resources from each parent. Defaults to 10.';
 $_lang['prop_taglister.includedeleted_desc'] = 'Include tags from deleted Resources in the results.';
 $_lang['prop_taglister.includeunpublished_desc'] = 'Include tags from unpublished Resources in the results.';
+$_lang['prop_taglister.where_desc'] = 'A criteria in JSON format for filtering results.';
 $_lang['prop_taglister.cls_desc'] = 'A CSS class to add to each row.';
 $_lang['prop_taglister.altcls_desc'] = 'A CSS class to add to each alternate row.';
 $_lang['prop_taglister.firstcls_desc'] = 'Optional. A CSS class to add to the first row. If empty will ignore.';
