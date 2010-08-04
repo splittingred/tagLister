@@ -61,6 +61,9 @@ if (!empty($children)) $parents = array_merge($parents, $children);
 $c = $modx->newQuery('modTemplateVarResource');
 $c->innerJoin('modTemplateVar','TemplateVar');
 $c->innerJoin('modResource','Resource');
+$c->leftJoin('modUser','CreatedBy','`CreatedBy`.`id` = `Resource`.`createdby`');
+$c->leftJoin('modUser','PublishedBy','`PublishedBy`.`id` = `Resource`.`publishedby`');
+$c->leftJoin('modUser','EditedBy','`EditedBy`.`id` = `Resource`.`editedby`');
 $tvPk = (int)$tv;
 if (!empty($tvPk)) {
     $c->where(array('TemplateVar.id' => $tvPk));
@@ -77,6 +80,14 @@ if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
 }
 if (!$modx->getOption('includeUnpublished',$scriptProperties,false)) {
     $c->where(array('Resource.published' => 1));
+}
+/* json where support */
+$where = $modx->getOption('where',$scriptProperties,'');
+if (!empty($where)) {
+    $where = $modx->fromJSON($where);
+    if (is_array($where) && !empty($where)) {
+        $c->where($where);
+    }
 }
 $tags = $modx->getCollection('modTemplateVarResource',$c);
 

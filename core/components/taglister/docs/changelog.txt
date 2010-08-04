@@ -2,6 +2,7 @@ Changelog for tagLister.
 
 tagLister 1.0.2
 ===============
+- Added where property for JSON where query support
 - Added parents, depth properties to taglister for specifying parent resources and depth
 - Added all, allTpl, and allText properties to tagLister snippet for listing an 'All Tags' result
 - Fixed bug in getResourcesTag snippet with tagRequestParam variable
