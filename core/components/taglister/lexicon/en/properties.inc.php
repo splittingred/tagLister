@@ -73,6 +73,10 @@ $_lang['prop_tolinks.cls_desc'] = 'Name of a CSS class to add to each result.';
 $_lang['prop_tolinks.toplaceholder_desc'] = 'If set, will set the output of this snippet to this placeholder rather than output it.';
 
 /* getResourcesTag snippet */
+$_lang['grt.tst_beginswith'] = 'Begins With';
+$_lang['grt.tst_contains'] = 'Contains';
+$_lang['grt.tst_endswith'] = 'Ends With';
+$_lang['grt.tst_exact'] = 'Exact';
 $_lang['prop_grt.tpl_desc'] = 'Name of a chunk serving as a resource template. NOTE: if not provided, properties are dumped to output for each resource.';
 $_lang['prop_grt.tplodd_desc'] = 'Name of a chunk serving as resource template for resources with an odd idx value (see idx property).';
 $_lang['prop_grt.tplfirst_desc'] = 'Name of a chunk serving as resource template for the first resource (see first property).';

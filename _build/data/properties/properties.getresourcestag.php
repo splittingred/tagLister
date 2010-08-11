@@ -307,7 +307,12 @@ $properties = array(
         'name' => 'tagSearchType',
         'desc' => 'prop_grt.tagsearchtype_desc',
         'type' => 'textfield',
-        'options' => '',
+        'options' => array(
+            array('text' => 'grt.tst_exact','value' => 'exact'),
+            array('text' => 'grt.tst_beginswith','value' => 'beginswith'),
+            array('text' => 'grt.tst_endswith','value' => 'endswith'),
+            array('text' => 'grt.tst_contains','value' => 'contains'),
+        ),
         'value' => 'exact',
         'lexicon' => 'taglister:properties',
     )
