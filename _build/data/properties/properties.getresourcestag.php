@@ -303,6 +303,14 @@ $properties = array(
         'value' => 'tag',
         'lexicon' => 'taglister:properties',
     )
+    ,array(
+        'name' => 'tagSearchType',
+        'desc' => 'prop_grt.tagsearchtype_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'exact',
+        'lexicon' => 'taglister:properties',
+    )
 );
 
 return $properties;

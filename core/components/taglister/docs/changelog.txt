@@ -1,5 +1,9 @@
 Changelog for tagLister.
 
+tagLister 1.0.3
+===============
+- Added &tagSearchType property to getResourcesTag to allow for different types of searching; defaults to exact
+
 tagLister 1.0.2
 ===============
 - Added where property for JSON where query support
