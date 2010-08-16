@@ -1,5 +1,9 @@
 Changelog for tagLister.
 
+tagLister 1.1.0
+===============
+- Added extraParams property to tolinks snippet
+
 tagLister 1.0.3
 ===============
 - Fixed bug in 'contains' setting of tagSearchType property in getResourcesTag

@@ -45,12 +45,32 @@ $items = $modx->getOption('items',$scriptProperties,'');
 if (empty($items)) return '';
 $items = explode($inputDelim,$items);
 
+/* if extra params, set em */
+$extraParams = $modx->getOption('extraParams',$scriptProperties,'');
+if (!empty($extraParams)) {
+    $extraParams = trim(trim(trim($extraParams,'?'),'&'),'&amp;');
+    $eps= explode(',',$extraParams);
+    $extraParams = array();
+    foreach ($eps as $ep) {
+        $ep = explode('=',$ep);
+        if (!empty($ep[1])) {
+            $extraParams[$ep[0]] = $ep[1];
+        }
+    }
+}
+
 /* iterate */
 $tags = array();
 foreach ($items as $item) {
     $itemArray = array();
     $itemArray['item'] = trim($item);
-    $itemArray['url'] = $modx->makeUrl($target,'','?'.$tagRequestParam.'='.$itemArray['item']);
+    $params = array(
+        $tagRequestParam => $itemArray['item'],
+    );
+    if (!empty($extraParams)) {
+        $params = array_merge($extraParams,$params);
+    }
+    $itemArray['url'] = $modx->makeUrl($target,'',$params);
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);
