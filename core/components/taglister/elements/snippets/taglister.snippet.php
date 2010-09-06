@@ -95,12 +95,17 @@ $tags = $modx->getCollection('modTemplateVarResource',$c);
 /* parse TV values */
 $output = array();
 $tagList = array();
+$encoding = $modx->getOption('modx_charset',$scriptProperties,'UTF-8');
+$useMultibyte = $modx->getOption('use_multibyte',$scriptProperties,false);
 foreach ($tags as $tag) {
    $v = $tag->get('value');
    $vs = explode($tvDelimiter,$v);
    foreach ($vs as $key) {
       $key = trim($key);
-      if ($toLower) $key = strtolower($key);
+      if (empty($key)) continue;
+      if ($toLower) { /* allow for case-insensitive filtering */
+          $key = $useMultibyte ? mb_strtolower($key,$encoding) : strtolower($key);
+      }
       if (empty($tagList[$key])) {
          $tagList[$key] = 1;
       } else { $tagList[$key]++; }

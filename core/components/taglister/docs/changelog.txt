@@ -2,7 +2,7 @@ Changelog for tagLister.
 
 tagLister 1.1.0
 ===============
-- Added toLower property to tagLister snippet to allow case-insensitive tag listing
+- Added toLower property to tagLister snippet to allow case-insensitive tag listing, with multibyte support
 - Added extraParams property to tolinks snippet
 
 tagLister 1.0.3
