@@ -46,6 +46,7 @@ $altCls = $modx->getOption('altCls',$scriptProperties,'tl-tag-alt');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
 $all = $modx->getOption('all',$scriptProperties,false);
+$toLower = $modx->getOption('toLower',$scriptProperties,false);
 
 /* parents support */
 $parents = isset($parents) ? explode(',', $parents) : array();
@@ -99,6 +100,7 @@ foreach ($tags as $tag) {
    $vs = explode($tvDelimiter,$v);
    foreach ($vs as $key) {
       $key = trim($key);
+      if ($toLower) $key = strtolower($key);
       if (empty($tagList[$key])) {
          $tagList[$key] = 1;
       } else { $tagList[$key]++; }

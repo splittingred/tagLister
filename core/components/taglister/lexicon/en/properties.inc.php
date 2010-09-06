@@ -55,6 +55,7 @@ $_lang['prop_taglister.cls_desc'] = 'A CSS class to add to each row.';
 $_lang['prop_taglister.altcls_desc'] = 'A CSS class to add to each alternate row.';
 $_lang['prop_taglister.firstcls_desc'] = 'Optional. A CSS class to add to the first row. If empty will ignore.';
 $_lang['prop_taglister.lastcls_desc'] = 'Optional. A CSS class to add to the last row. If empty will ignore.';
+$_lang['prop_taglister.tolower_desc'] = 'Optional. If set to true, will allow case-insensitive tag listing.';
 $_lang['prop_taglister.all_desc'] = 'Whether or not to show an "All Tags" result.';
 $_lang['prop_taglister.alltpl_desc'] = 'The chunk for showing the all tags link.';
 $_lang['prop_taglister.allposition_desc'] = 'Whether or not the all tags link should be at the top (T) or bottom (B) of the results.';

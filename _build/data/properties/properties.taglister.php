@@ -171,6 +171,14 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     ),
     array(
+        'name' => 'toLower',
+        'desc' => 'prop_taglister.tolower_desc',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => false,
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
         'name' => 'all',
         'desc' => 'prop_taglister.all_desc',
         'type' => 'combo-boolean',
