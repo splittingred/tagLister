@@ -47,7 +47,8 @@ $altCls = $modx->getOption('altCls',$scriptProperties,'');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'');
-$activeTag = $modx->getOption('activeTag',$scriptProperties,$modx->stripTags(urldecode($_REQUEST[$tagVar])));
+$activeTag = $modx->stripTags(urldecode($_REQUEST[$tagVar]));
+$activeKey = $modx->stripTags(urldecode($_REQUEST[$tagKeyVar]));
 $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
 $weights = $modx->getOption('weights',$scriptProperties,0);
@@ -133,7 +134,7 @@ foreach ($tagList as $tag => $count) {
 	$tagCls = $cls.((!empty($altCls) && $i % 2)? ' '.$altCls : '');
     if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
     if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
-    if (!empty($activeCls) && $tag==$activeTag) $tagCls .= ' '.$activeCls;
+    if (!empty($activeCls) && $tag==$activeTag && (empty($activeKey) || $tv==$activeKey)) $tagCls .= ' '.$activeCls;
 	if (!empty($weights) && !empty($weightCls)) $tagCls .= ' '.$weightCls.ceil($count / (max($tagList) / $weights));
 
     $output[] = $tagLister->getChunk($tpl,array(
