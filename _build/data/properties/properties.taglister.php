@@ -245,5 +245,21 @@ $properties = array(
         'value' => '',
         'lexicon' => 'taglister:properties',
     ),
+    array(
+        'name' => 'weightCls',
+        'desc' => 'prop_taglister.weightcls_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tl-tag-weight',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
+        'name' => 'weights',
+        'desc' => 'prop_taglister.weights_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '5',
+        'lexicon' => 'taglister:properties',
+    ),
 );
 return $properties;

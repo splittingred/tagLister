@@ -64,6 +64,8 @@ $_lang['prop_taglister.toplaceholder_desc'] = 'If set, will set the output of th
 $_lang['prop_taglister.outputseparator_desc'] = 'The separator for output for each result.';
 $_lang['prop_taglister.activecls_desc'] = 'Optional. A CSS class to add to the active tag. If empty will ignore.';
 $_lang['prop_taglister.activetag_desc'] = 'Optional. tag name to set as active. If empty will read from REQUEST[$tagVar]';
+$_lang['prop_taglister.weights_desc'] = 'Optional. The number of weights to calculate. 0 or empty will disable weights';
+$_lang['prop_taglister.weightcls_desc'] = 'Optional. A CSS class to prefix each weight. If empty will disable weights.';
 
 /* tolinks snippet */
 $_lang['prop_tolinks.items_desc'] = 'The items to turn into links.';

@@ -49,6 +49,8 @@ $activeCls = $modx->getOption('activeCls',$scriptProperties,'');
 $activeTag = $modx->getOption('activeTag',$scriptProperties,$modx->stripTags(urldecode($_REQUEST[$tagVar])));
 $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
+$weights = $modx->getOption('weights',$scriptProperties,0);
+$weightCls = $modx->getOption('weightCls',$scriptProperties,'');
 
 /* parents support */
 $parents = isset($parents) ? explode(',', $parents) : array();
@@ -131,6 +133,7 @@ foreach ($tagList as $tag => $count) {
     if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
     if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
     if (!empty($activeCls) && $tag==$activeTag) $tagCls .= ' '.$activeCls;
+	if (!empty($weights) && !empty($weightCls)) $tagCls .= ' '.$weightCls.ceil($count / (max($tagList) / $weights));
 
     $output[] = $tagLister->getChunk($tpl,array(
         'tag' => $tag,
