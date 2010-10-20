@@ -229,5 +229,21 @@ $properties = array(
         'value' => "\n",
         'lexicon' => 'taglister:properties',
     ),
+    array(
+        'name' => 'activeCls',
+        'desc' => 'prop_taglister.activecls_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'active',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
+        'name' => 'activeTag',
+        'desc' => 'prop_taglister.activetag_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'taglister:properties',
+    ),
 );
 return $properties;

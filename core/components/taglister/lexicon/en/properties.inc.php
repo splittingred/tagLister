@@ -62,6 +62,8 @@ $_lang['prop_taglister.allposition_desc'] = 'Whether or not the all tags link sh
 $_lang['prop_taglister.alltext_desc'] = 'The text for the all tags link. Defaults to "All Tags".';
 $_lang['prop_taglister.toplaceholder_desc'] = 'If set, will set the output of this snippet to this placeholder rather than output it.';
 $_lang['prop_taglister.outputseparator_desc'] = 'The separator for output for each result.';
+$_lang['prop_taglister.activecls_desc'] = 'Optional. A CSS class to add to the active tag. If empty will ignore.';
+$_lang['prop_taglister.activetag_desc'] = 'Optional. tag name to set as active. If empty will read from REQUEST[$tagVar]';
 
 /* tolinks snippet */
 $_lang['prop_tolinks.items_desc'] = 'The items to turn into links.';

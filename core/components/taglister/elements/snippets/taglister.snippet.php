@@ -45,6 +45,8 @@ $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 $altCls = $modx->getOption('altCls',$scriptProperties,'tl-tag-alt');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
+$activeCls = $modx->getOption('activeCls',$scriptProperties,'');
+$activeTag = $modx->getOption('activeTag',$scriptProperties,$modx->stripTags(urldecode($_REQUEST[$tagVar])));
 $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
 
@@ -128,6 +130,7 @@ foreach ($tagList as $tag => $count) {
     $tagCls = $cls.($i % 2 ? ' '.$altCls : '');
     if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
     if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
+    if (!empty($activeCls) && $tag==$activeTag) $tagCls .= ' '.$activeCls;
 
     $output[] = $tagLister->getChunk($tpl,array(
         'tag' => $tag,
