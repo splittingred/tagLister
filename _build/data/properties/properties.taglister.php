@@ -69,6 +69,14 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     ),
     array(
+        'name' => 'tagKeyVar',
+        'desc' => 'prop_taglister.tagkeyvar_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'key',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
         'name' => 'sortBy',
         'desc' => 'prop_taglister.sortby_desc',
         'type' => 'list',

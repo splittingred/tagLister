@@ -36,6 +36,8 @@ $inputDelim = $modx->getOption('inputDelim',$scriptProperties,',');
 $outputDelim = $modx->getOption('outputDelim',$scriptProperties,', ');
 $key = $modx->getOption('key',$scriptProperties,'tag'); /* backwards compat */
 $tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,$key);
+$tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
+$tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
 $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $modx->resource->get('id');
 $tpl = $modx->getOption('tpl',$scriptProperties,'link');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
@@ -66,6 +68,7 @@ foreach ($items as $item) {
     $itemArray['item'] = trim($item);
     $params = array(
         $tagRequestParam => $itemArray['item'],
+		$tagKeyVar => $tagKey,
     );
     if (!empty($extraParams)) {
         $params = array_merge($extraParams,$params);

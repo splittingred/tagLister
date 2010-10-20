@@ -77,6 +77,22 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     ),
     array(
+        'name' => 'tagKeyVar',
+        'desc' => 'prop_tolinks.tagkeyvar_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'key',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
+        'name' => 'tagKey',
+        'desc' => 'prop_tolinks.tagkey_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'tags',
+        'lexicon' => 'taglister:properties',
+    ),
+    array(
         'name' => 'cls',
         'desc' => 'prop_tolinks.cls_desc',
         'type' => 'textfield',

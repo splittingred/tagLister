@@ -42,7 +42,8 @@ $_lang['prop_taglister.tpl_desc'] = 'Name of a Chunk that will be used for each 
 $_lang['prop_taglister.tv_desc'] = 'The name or ID of the TV being used for tags.';
 $_lang['prop_taglister.tvdelimiter_desc'] = 'The delimiter being used between tags in the TV. Usually a comma, sometimes a space.';
 $_lang['prop_taglister.target_desc'] = 'The target Resource to point the tag links to. Will default to the current Resource.';
-$_lang['prop_taglister.tagvar_desc'] = 'The REQUEST var to use in the links generated for each tag result.';
+$_lang['prop_taglister.tagvar_desc'] = 'The REQUEST var of the tag value. Used in the links generated for each tag result.';
+$_lang['prop_taglister.tagkeyvar_desc'] = 'The REQUEST var of the tv name. Used in the links generated for each tag result';
 $_lang['prop_taglister.sortby_desc'] = 'Field to sort by. Defaults to count. Can be either tag or count.';
 $_lang['prop_taglister.sortdir_desc'] = 'Order which to sort by. Defaults to ASC.';
 $_lang['prop_taglister.limit_desc'] = 'Limits the number of resources returned. Defaults to 10.';
@@ -76,6 +77,8 @@ $_lang['prop_tolinks.outputdelim_desc'] = 'The delimiter that separates the link
 $_lang['prop_tolinks.tagrequestparam_desc'] = 'The REQUEST var key that will be used in generating the links.';
 $_lang['prop_tolinks.cls_desc'] = 'Name of a CSS class to add to each result.';
 $_lang['prop_tolinks.toplaceholder_desc'] = 'If set, will set the output of this snippet to this placeholder rather than output it.';
+$_lang['prop_tolinks.tagkey_desc'] = 'The REQUEST var of the tag value. Used in the links generated for each tag result.';
+$_lang['prop_tolinks.tagkeyvar_desc'] = 'The REQUEST var of the tv name. Used in the links generated for each tag result';
 
 /* getResourcesTag snippet */
 $_lang['grt.tst_beginswith'] = 'Begins With';
@@ -118,4 +121,5 @@ $_lang['prop_grt.pagelasttpl_desc'] = 'Content representing the last page naviga
 $_lang['prop_grt.pageprevtpl_desc'] = 'Content representing the previous page navigation control.';
 $_lang['prop_grt.pagenexttpl_desc'] = 'Content representing the next page navigation control.';
 $_lang['prop_grt.tagkey_desc'] = 'The key to set the tags filter by.';
+$_lang['prop_grt.tagkeyvar_desc'] = 'Optional. Name of the REQUEST param key. If exists in the REQUEST - it overrides tagkey. Setting it to empty - it will disable this override.';
 $_lang['prop_grt.tagrequestparam_desc'] = 'The REQUEST param key being sent that will be the value for the tags filter.';
