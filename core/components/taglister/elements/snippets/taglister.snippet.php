@@ -38,15 +38,21 @@ $tv = $modx->getOption('tv',$scriptProperties,'tags');
 $tvDelimiter = $modx->getOption('tvDelimiter',$scriptProperties,',');
 $target = $modx->getOption('target',$scriptProperties,1);
 $tagVar = $modx->getOption('tagVar',$scriptProperties,'tag');
+$tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
 $limit = $modx->getOption('limit',$scriptProperties,10);
 $sortBy = $modx->getOption('sortBy',$scriptProperties,'count');
 $sortDir = $modx->getOption('sortDir',$scriptProperties,'ASC');
-$cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
-$altCls = $modx->getOption('altCls',$scriptProperties,'tl-tag-alt');
+$cls = $modx->getOption('cls',$scriptProperties,'');
+$altCls = $modx->getOption('altCls',$scriptProperties,'');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
+$activeCls = $modx->getOption('activeCls',$scriptProperties,'');
+$activeTag = $modx->stripTags(urldecode($_REQUEST[$tagVar]));
+$activeKey = $modx->stripTags(urldecode($_REQUEST[$tagKeyVar]));
 $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
+$weights = $modx->getOption('weights',$scriptProperties,0);
+$weightCls = $modx->getOption('weightCls',$scriptProperties,'');
 
 /* parents support */
 $parents = isset($parents) ? explode(',', $parents) : array();
@@ -106,6 +112,7 @@ foreach ($tags as $tag) {
       if ($toLower) { /* allow for case-insensitive filtering */
           $key = $useMultibyte ? mb_strtolower($key,$encoding) : strtolower($key);
       }
+      /* increment tag count */
       if (empty($tagList[$key])) {
          $tagList[$key] = 1;
       } else { $tagList[$key]++; }
@@ -125,13 +132,19 @@ $totalTags = 0;
 $i = $all ? 1 : 0;
 foreach ($tagList as $tag => $count) {
     if ($i >= $limit) break;
-    $tagCls = $cls.($i % 2 ? ' '.$altCls : '');
+    $tagCls = $cls.((!empty($altCls) && $i % 2)? ' '.$altCls : '');
     if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
     if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
+    /* if tag is currently being viewed, mark as active */
+    if (!empty($activeCls) && $tag==$activeTag && (empty($activeKey) || $tv==$activeKey)) $tagCls .= ' '.$activeCls;
+    /* handle weighting for css */
+    if (!empty($weights) && !empty($weightCls)) $tagCls .= ' '.$weightCls.ceil($count / (max($tagList) / $weights));
 
     $output[] = $tagLister->getChunk($tpl,array(
         'tag' => $tag,
         'tagVar' => $tagVar,
+        'tagKey' => $tv,
+        'tagKeyVar' => $tagKeyVar,
         'count' => $count,
         'target' => $target,
         'cls' => $tagCls,
@@ -145,6 +158,8 @@ if ($all) {
     $allChunk = $tagLister->getChunk($allTpl,array(
         'tag' => !empty($scriptProperties['allText']) ? $scriptProperties['allText'] : $modx->lexicon('all_tags'),
         'tagVar' => $tagVar,
+        'tagKey' => $tv,
+        'tagKeyVar' => $tagKeyVar,
         'count' => $totalTags,
         'target' => $target,
         'cls' => $cls,

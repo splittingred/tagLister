@@ -29,7 +29,8 @@
  *
  * @package taglister
  */
-$tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
+$tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
+$tagKey = (!empty($tagKeyVar) && !empty($_GET[$tagKeyVar]))? $_GET[$tagKeyVar] : $modx->getOption('tagKey',$scriptProperties,'tags');
 $tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
 $grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
 

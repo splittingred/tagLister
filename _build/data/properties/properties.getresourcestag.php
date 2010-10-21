@@ -296,6 +296,14 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     )
     ,array(
+        'name' => 'tagKeyVar',
+        'desc' => 'prop_grt.tagkeyvar_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'key',
+        'lexicon' => 'taglister:properties',
+    )
+    ,array(
         'name' => 'tagRequestParam',
         'desc' => 'prop_grt.tagrequestparam_desc',
         'type' => 'textfield',
