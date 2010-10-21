@@ -2,6 +2,12 @@ Changelog for tagLister.
 
 tagLister 1.1.0
 ===============
+- Added active tag: Set css class for currently selected tag. Used in conjunction with a content listing snippet (like getResourcesTag)
+- Added activeCls: (Optional) A CSS class to add to the active tag. If empty will ignore.
+- Added activeTag: (Optional) tag name to set as active. If empty will read from REQUEST[$tagVar]
+- Fixed cls and altCls properties to allow empty values
+- Added weights calculation for better css styling (compared to using count).  Each tags count relative to the rest (on a linear scale) adds a class
+- Implemented tagKey and tagKeyVar in all three snippets
 - Added toLower property to tagLister snippet to allow case-insensitive tag listing, with multibyte support
 - Added extraParams property to tolinks snippet
 
