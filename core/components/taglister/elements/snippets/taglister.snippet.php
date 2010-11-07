@@ -148,6 +148,7 @@ foreach ($tagList as $tag => $count) {
         'count' => $count,
         'target' => $target,
         'cls' => $tagCls,
+        'idx' => $i,
     ));
     $totalTags += $count;
     $i++;
