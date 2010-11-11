@@ -96,6 +96,9 @@ if (!empty($where)) {
         $c->where($where);
     }
 }
+if ($sortBy == 'publishedon') {
+    $c->sortby('Resource.publishedon',$sortDir);
+}
 $tags = $modx->getCollection('modTemplateVarResource',$c);
 
 /* parse TV values */
@@ -121,6 +124,7 @@ foreach ($tags as $tag) {
 
 /* sort */
 switch ($sortBy.'-'.$sortDir) {
+    case 'publishedon-DESC': case 'publishedon-ASC': break;
     case 'tag-ASC': ksort($tagList); break;
     case 'tag-DESC': krsort($tagList); break;
     case 'count-DESC': asort($tagList); break;

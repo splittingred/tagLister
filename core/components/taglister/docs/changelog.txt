@@ -1,5 +1,10 @@
 Changelog for tagLister.
 
+tagLister 1.1.1
+===============
+- Added ability to sort by publishedon in tagLister
+- Added idx placeholder to each tag
+
 tagLister 1.1.0
 ===============
 - Added active tag: Set css class (activeCls) for currently selected tag. Used in conjunction with a content listing snippet (like getResourcesTag)
