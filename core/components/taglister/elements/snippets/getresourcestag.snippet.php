@@ -35,15 +35,16 @@ $tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
 $grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
 $tag = $modx->getOption('tag',$scriptProperties,urldecode($_GET[$tagRequestParam]));
 if (!empty($tag)) {
+    $tag = $modx->stripTags($tag);
     $tagSearchType = $modx->getOption('tagSearchType',$scriptProperties,'exact');
     if ($tagSearchType == 'contains') {
-        $scriptProperties['tvFilters'] = $tagKey.'==%'.$modx->stripTags($tag).'%';
+        $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'%';
     } else if ($tagSearchType == 'beginswith') {
-        $scriptProperties['tvFilters'] = $tagKey.'==%'.$modx->stripTags($tag).'';
+        $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'';
     } else if ($tagSearchType == 'endswith') {
-        $scriptProperties['tvFilters'] = $tagKey.'=='.$modx->stripTags($tag).'%';
+        $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'%';
     } else {
-        $scriptProperties['tvFilters'] = $tagKey.'=='.$modx->stripTags($tag).'';
+        $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'';
     }    
 }
 $elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));

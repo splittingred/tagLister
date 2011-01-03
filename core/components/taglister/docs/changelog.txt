@@ -1,5 +1,10 @@
 Changelog for tagLister.
 
+tagLister 1.1.2
+===============
+- [#15] Add fix to allow for &tag property in getResourcesTag snippet
+- [#10] Add urldecode to tag var in getResourcesTag to fix encoded chars
+
 tagLister 1.1.1
 ===============
 - Added ability to sort by publishedon in tagLister
