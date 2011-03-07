@@ -112,6 +112,7 @@ $_lang['prop_grt.page_desc'] = 'The page to display; this is determined based on
 $_lang['prop_grt.pagevarkey_desc'] = 'The key of a property that indicates the current page.';
 $_lang['prop_grt.totalvar_desc'] = 'The key of a placeholder that must contain the total records in the limitable collection being paged.';
 $_lang['prop_grt.pagelimit_desc'] = 'The maximum number of pages to display when rendering paging controls.';
+$_lang['prop_grt.element_desc'] = 'The element name that will be called by the getPage instance.';
 $_lang['prop_grt.elementclass_desc'] = 'The class of element that will be called by the getPage snippet instance.';
 $_lang['prop_grt.pagenavvar_desc'] = 'The key of a placeholder to be set with the paging navigation controls.';
 $_lang['prop_grt.pagenavtpl_desc'] = 'Content representing a single page navigation control.';

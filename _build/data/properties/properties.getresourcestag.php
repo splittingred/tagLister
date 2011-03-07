@@ -240,6 +240,14 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     )
     ,array(
+        'name' => 'element',
+        'desc' => 'prop_grt.element_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'getResources',
+        'lexicon' => 'taglister:properties',
+    )
+    ,array(
         'name' => 'pageNavVar',
         'desc' => 'prop_grt.pagenavvar_desc',
         'type' => 'textfield',

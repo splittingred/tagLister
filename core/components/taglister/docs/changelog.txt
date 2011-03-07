@@ -2,6 +2,8 @@ Changelog for tagLister.
 
 tagLister 1.1.2
 ===============
+- [#16] Add lastCls, condition if tag is equal tagList count.
+- [#16] Add element (value: getResources) to default properties
 - [#15] Add fix to allow for &tag property in getResourcesTag snippet
 - [#10] Add urldecode to tag var in getResourcesTag to fix encoded chars
 

@@ -138,7 +138,7 @@ foreach ($tagList as $tag => $count) {
     if ($i >= $limit) break;
     $tagCls = $cls.((!empty($altCls) && $i % 2)? ' '.$altCls : '');
     if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
-    if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
+    if (!empty($lastCls) && ($i+1 >= $limit || $i == $count)) $tagCls .= ' '.$lastCls;
     /* if tag is currently being viewed, mark as active */
     if (!empty($activeCls) && $tag==$activeTag && (empty($activeKey) || $tv==$activeKey)) $tagCls .= ' '.$activeCls;
     /* handle weighting for css */
