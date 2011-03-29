@@ -34,8 +34,7 @@ if (!($tagLister instanceof TagLister)) return '';
 /* setup default properties */
 $inputDelim = $modx->getOption('inputDelim',$scriptProperties,',');
 $outputDelim = $modx->getOption('outputDelim',$scriptProperties,', ');
-$key = $modx->getOption('key',$scriptProperties,'tag'); /* backwards compat */
-$tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,$key);
+$tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
 $tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
 $tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
 $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $modx->resource->get('id');
