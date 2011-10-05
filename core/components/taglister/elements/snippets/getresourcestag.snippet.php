@@ -59,7 +59,11 @@ if (!empty($tag)) {
             $tvFilters[] = $tvName.'=='.$tag.'';
         }
     }
-    $scriptProperties['tvFilters'] = implode('||',$tvFilters);
+
+    $multipleType = $modx->getOption('multipleTVOperator',$scriptProperties,'or');
+    if ($multipleType == 'or') { $multipleType = '||'; }
+    else { $multipleType = ','; }
+    $scriptProperties['tvFilters'] = implode($multipleType,$tvFilters);
 }
 
 $elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));
