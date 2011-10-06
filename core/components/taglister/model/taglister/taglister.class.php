@@ -29,6 +29,7 @@
  * @package tagLister
  */
 class TagLister {
+    /* @var modX $modx */
     public $modx;
     public $config = array();
 
@@ -108,5 +109,100 @@ class TagLister {
         }
 
         return $random;
+    }
+
+    public function getAllTags($tv,$scriptProperties,$groupResults = false) {
+        $tvs = isset($tv) ? explode(',',$tv) : array();
+
+        /* Parents support (from tagLister)*/
+        $parents = isset($scriptProperties['parents']) ? explode(',', $scriptProperties['parents']) : array();
+        $depth = isset($scriptProperties['depth']) ? (integer) $scriptProperties['depth'] : 10;
+        $children = array();
+        foreach ($parents as $parent) {
+            $pchildren = $this->modx->getChildIds($parent, $depth);
+            if (!empty($pchildren)) $children = array_merge($children, $pchildren);
+        }
+        if (!empty($children)) $parents = array_merge($parents, $children);
+
+        /* Get TV values (from tagLister, adjusted for multi TVs support) */
+        $c = $this->modx->newQuery('modTemplateVarResource');
+        $c->innerJoin('modTemplateVar','TemplateVar');
+        $c->innerJoin('modResource','Resource');
+        $c->leftJoin('modUser','CreatedBy','CreatedBy.id = Resource.createdby');
+        $c->leftJoin('modUser','PublishedBy','PublishedBy.id = Resource.publishedby');
+        $c->leftJoin('modUser','EditedBy','EditedBy.id = Resource.editedby');
+
+        if (!empty($parents)) {
+            $c->where(array(
+                'Resource.parent:IN' => $parents,
+            ));
+        }
+
+        if (!$scriptProperties['includeDeleted']) {
+            $c->where(array('Resource.deleted' => 0));
+        }
+        if (!$scriptProperties['includeUnpublished']) {
+            $c->where(array('Resource.published' => 1));
+        }
+
+        $tvSearch = array();
+        foreach ($tvs as $tv) {
+            $tvPk = (int)$tv;
+            if (!empty($tvPk)) {
+                $tvSearch[] = array('TemplateVar.id' => $tvPk);
+            } else {
+                $tvSearch[] = array('TemplateVar.name' => $tv);
+            }
+        }
+
+        if (!empty($tvSearch)){
+            $c->where($tvSearch,xPDOQuery::SQL_OR);
+        }
+
+        /* json where support */
+        if (!empty($scriptProperties['where'])) {
+            $where = $this->modx->fromJSON($scriptProperties['where']);
+            if (is_array($where) && !empty($where)) {
+                $c->where($where);
+            }
+        }
+
+        $tags = $this->modx->getCollection('modTemplateVarResource',$c);
+
+        /* parse TV values */
+        $output = array();
+        $tagList = array();
+        /* @var modTemplateVarResource $tag */
+        foreach ($tags as $tag) {
+            $v = $tag->get('value');
+            $vs = explode($scriptProperties['tvDelimiter'],$v);
+            foreach ($vs as $key) {
+                $key = trim($key);
+                if (empty($key)) continue;
+                if ($scriptProperties['toLower']) { /* allow for case-insensitive filtering */
+                    $key = $scriptProperties['useMultibyte'] ? mb_strtolower($key,$scriptProperties['encoding']) : strtolower($key);
+                }
+
+                /* increment tag count & optionally group based on the first char. */
+                if ($groupResults) {
+                    $group = substr($key,0,1);
+                    if (is_numeric($group) && $scriptProperties['groupNumeric']) $group = $scriptProperties['numericHeader'];
+
+                    if (empty($tagList[$group][$key])) {
+                        $tagList[$group][$key] = 1;
+                    } else {
+                        $tagList[$group][$key]++;
+                    }
+                } else {
+                    if (empty($tagList[$key])) {
+                        $tagList[$key] = 1;
+                    } else {
+                        $tagList[$key]++;
+                    }
+                }
+            }
+        }
+
+        return $tagList;
     }
 }
