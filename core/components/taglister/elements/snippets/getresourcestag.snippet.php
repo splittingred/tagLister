@@ -28,25 +28,44 @@
  * getResources to be installed to work.
  *
  * @package taglister
+ * @var modX $modx
+ * @var array $scriptProperties
  */
+
+/* Source (TV) of tags to check in */
 $tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
 $tagKey = (!empty($tagKeyVar) && !empty($_GET[$tagKeyVar]))? $_GET[$tagKeyVar] : $modx->getOption('tagKey',$scriptProperties,'tags');
+/* Allows use of multiple tagKey TVs */
+$tagKey = explode(',',$tagKey);
+
+/* Source (REQUEST) of tag to search for */
 $tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
-$grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
 $tag = $modx->getOption('tag',$scriptProperties,urldecode($_GET[$tagRequestParam]));
+
+$grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
 if (!empty($tag)) {
     $tag = $modx->stripTags($tag);
     $tagSearchType = $modx->getOption('tagSearchType',$scriptProperties,'exact');
-    if ($tagSearchType == 'contains') {
-        $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'%';
-    } else if ($tagSearchType == 'beginswith') {
-        $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'';
-    } else if ($tagSearchType == 'endswith') {
-        $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'%';
-    } else {
-        $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'';
-    }    
+
+    $tvFilters = array();
+    foreach ($tagKey as $tvName) {
+        if ($tagSearchType == 'contains') {
+            $tvFilters[] = $tvName.'==%'.$tag.'%';
+        } elseif ($tagSearchType == 'beginswith') {
+            $tvFilters[] = $tvName.'==%'.$tag.'';
+        } elseif ($tagSearchType == 'endswith') {
+            $tvFilters[] = $tvName.'=='.$tag.'%';
+        } else {
+            $tvFilters[] = $tvName.'=='.$tag.'';
+        }
+    }
+
+    $multipleType = $modx->getOption('multipleTVOperator',$scriptProperties,'or');
+    if ($multipleType == 'or') { $multipleType = '||'; }
+    else { $multipleType = ','; }
+    $scriptProperties['tvFilters'] = implode($multipleType,$tvFilters);
 }
+
 $elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));
 if ($elementObj) {
     $elementObj->setCacheable(false);
