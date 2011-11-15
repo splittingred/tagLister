@@ -26,6 +26,10 @@
 /**
  * tolinks snippet. Creates links out of tags.
  *
+ * @var modX $modx
+ * @var tagLister $tagLister
+ * @var array $scriptProperties
+ * 
  * @package taglister
  */
 $tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
@@ -40,6 +44,7 @@ $tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
 $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $modx->resource->get('id');
 $tpl = $modx->getOption('tpl',$scriptProperties,'link');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
+$useTagsFurl = $modx->getOption('useTagsFurl',$scriptProperties,false);
 
 /* get items */
 $items = $modx->getOption('items',$scriptProperties,'');
@@ -65,14 +70,21 @@ $tags = array();
 foreach ($items as $item) {
     $itemArray = array();
     $itemArray['item'] = trim($item);
-    $params = array(
-        $tagRequestParam => $itemArray['item'],
-		$tagKeyVar => $tagKey,
-    );
+    $params = array();
+    if (empty($useTagsFurl)) {
+        $params = array(
+            $tagRequestParam => $itemArray['item'],
+            $tagKeyVar => $tagKey,
+        );
+    }
+
     if (!empty($extraParams)) {
         $params = array_merge($extraParams,$params);
     }
     $itemArray['url'] = $modx->makeUrl($target,'',$params);
+    if (!empty($useTagsFurl)) {
+         $itemArray['url'] = rtrim($itemArray['url'],'/').'/tags/'.$itemArray['item'];
+    }
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);

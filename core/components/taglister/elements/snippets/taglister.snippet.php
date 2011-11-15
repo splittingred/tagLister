@@ -26,6 +26,10 @@
 /**
  * tagLister snippet
  *
+ * @var modX
+ * @var TagLister $tagLister
+ * @var array $scriptProperties
+ *
  * @package taglister
  */
 $tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
@@ -53,6 +57,7 @@ $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
 $weights = $modx->getOption('weights',$scriptProperties,0);
 $weightCls = $modx->getOption('weightCls',$scriptProperties,'');
+$useTagFurl = $modx->getOption('useTagFurl',$scriptProperties,false);
 
 /* parents support */
 $parents = isset($parents) ? explode(',', $parents) : array();
@@ -78,8 +83,16 @@ if (!empty($tvPk)) {
     $c->where(array('TemplateVar.name' => $tv));
 }
 if (!empty($parents)) {
+    $children = array();
+    foreach ($parents as $parent) {
+        $kids = $modx->getChildIds($parent);
+        foreach ($kids as $kid) {
+            $children[] = $kid;
+        }
+    }
+    $children = array_unique($children);
     $c->where(array(
-        'Resource.parent:IN' => $parents,
+        'Resource.id:IN' => $children,
     ));
 }
 if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
@@ -147,7 +160,7 @@ foreach ($tagList as $tag => $count) {
     /* handle weighting for css */
     if (!empty($weights) && !empty($weightCls)) $tagCls .= ' '.$weightCls.ceil($count / (max($tagList) / $weights));
 
-    $output[] = $tagLister->getChunk($tpl,array(
+    $tagArray = array(
         'tag' => $tag,
         'tagVar' => $tagVar,
         'tagKey' => $tv,
@@ -156,7 +169,18 @@ foreach ($tagList as $tag => $count) {
         'target' => $target,
         'cls' => $tagCls,
         'idx' => $i,
-    ));
+    );
+    $tagParams = array();
+    if (empty($useTagFurl)) {
+        $tagParams[$tagVar] = $tag;
+        $tagParams[$tagKeyVar] = $tv;
+    }
+    $tagArray['url'] = $modx->makeUrl($target,'',$tagParams);
+    if (!empty($useTagFurl)) {
+        $tagArray['url'] = rtrim($tagArray['url'],'/').'/tags/'.str_replace(' ','+',$tag);
+    }
+
+    $output[] = $tagLister->getChunk($tpl,$tagArray);
     $totalTags += $count;
     $i++;
 }
