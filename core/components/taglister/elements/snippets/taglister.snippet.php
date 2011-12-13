@@ -177,7 +177,7 @@ foreach ($tagList as $tag => $count) {
     }
     $tagArray['url'] = $modx->makeUrl($target,'',$tagParams);
     if (!empty($useTagFurl)) {
-        $tagArray['url'] = rtrim($tagArray['url'],'/').'/tags/'.str_replace(' ','+',$tag);
+        $tagArray['url'] = rtrim($tagArray['url'],'/').'/'.$tv.'/'.urlencode($tag);
     }
 
     $output[] = $tagLister->getChunk($tpl,$tagArray);
