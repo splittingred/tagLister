@@ -1,5 +1,23 @@
 Changelog for tagLister.
 
+tagLister 1.1.3
+===============
+- [#17] Fix issue with tolinks and key parameter
+- Fix queries for sqlsrv support
+
+tagLister 1.1.2
+===============
+- [#18] Add ability to sortBy=`rand` to randomly sort tags in tagLister snippet
+- [#16] Add lastCls, condition if tag is equal tagList count.
+- [#16] Add element (value: getResources) to default properties
+- [#15] Add fix to allow for &tag property in getResourcesTag snippet
+- [#10] Add urldecode to tag var in getResourcesTag to fix encoded chars
+
+tagLister 1.1.1
+===============
+- Added ability to sort by publishedon in tagLister
+- Added idx placeholder to each tag
+
 tagLister 1.1.0
 ===============
 - Added active tag: Set css class (activeCls) for currently selected tag. Used in conjunction with a content listing snippet (like getResourcesTag)

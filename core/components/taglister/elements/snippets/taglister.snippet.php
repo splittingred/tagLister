@@ -26,6 +26,10 @@
 /**
  * tagLister snippet
  *
+ * @var modX
+ * @var TagLister $tagLister
+ * @var array $scriptProperties
+ *
  * @package taglister
  */
 $tagLister = $modx->getService('taglister','TagLister',$modx->getOption('taglister.core_path',null,$modx->getOption('core_path').'components/taglister/').'model/taglister/',$scriptProperties);
@@ -40,8 +44,8 @@ $target = $modx->getOption('target',$scriptProperties,1);
 $tagVar = $modx->getOption('tagVar',$scriptProperties,'tag');
 $tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
 $limit = $modx->getOption('limit',$scriptProperties,10);
-$sortBy = $modx->getOption('sortBy',$scriptProperties,'count');
-$sortDir = $modx->getOption('sortDir',$scriptProperties,'ASC');
+$sortBy = strtolower($modx->getOption('sortBy',$scriptProperties,'count'));
+$sortDir = strtoupper($modx->getOption('sortDir',$scriptProperties,'ASC'));
 $cls = $modx->getOption('cls',$scriptProperties,'');
 $altCls = $modx->getOption('altCls',$scriptProperties,'');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
@@ -53,6 +57,7 @@ $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
 $weights = $modx->getOption('weights',$scriptProperties,0);
 $weightCls = $modx->getOption('weightCls',$scriptProperties,'');
+$useTagFurl = $modx->getOption('useTagFurl',$scriptProperties,false);
 
 /* parents support */
 $parents = isset($parents) ? explode(',', $parents) : array();
@@ -68,9 +73,9 @@ if (!empty($children)) $parents = array_merge($parents, $children);
 $c = $modx->newQuery('modTemplateVarResource');
 $c->innerJoin('modTemplateVar','TemplateVar');
 $c->innerJoin('modResource','Resource');
-$c->leftJoin('modUser','CreatedBy','`CreatedBy`.`id` = `Resource`.`createdby`');
-$c->leftJoin('modUser','PublishedBy','`PublishedBy`.`id` = `Resource`.`publishedby`');
-$c->leftJoin('modUser','EditedBy','`EditedBy`.`id` = `Resource`.`editedby`');
+$c->leftJoin('modUser','CreatedBy','CreatedBy.id = Resource.createdby');
+$c->leftJoin('modUser','PublishedBy','PublishedBy.id = Resource.publishedby');
+$c->leftJoin('modUser','EditedBy','EditedBy.id = Resource.editedby');
 $tvPk = (int)$tv;
 if (!empty($tvPk)) {
     $c->where(array('TemplateVar.id' => $tvPk));
@@ -78,8 +83,16 @@ if (!empty($tvPk)) {
     $c->where(array('TemplateVar.name' => $tv));
 }
 if (!empty($parents)) {
+    $children = array();
+    foreach ($parents as $parent) {
+        $kids = $modx->getChildIds($parent);
+        foreach ($kids as $kid) {
+            $children[] = $kid;
+        }
+    }
+    $children = array_unique($children);
     $c->where(array(
-        'Resource.parent:IN' => $parents,
+        'Resource.id:IN' => $children,
     ));
 }
 if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
@@ -95,6 +108,11 @@ if (!empty($where)) {
     if (is_array($where) && !empty($where)) {
         $c->where($where);
     }
+}
+if ($sortBy == 'publishedon') {
+    $c->sortby('Resource.publishedon',$sortDir);
+} else if (in_array($sortBy,array('rand','random','rand()'))) {
+    $c->sortby('RAND()','');
 }
 $tags = $modx->getCollection('modTemplateVarResource',$c);
 
@@ -121,10 +139,12 @@ foreach ($tags as $tag) {
 
 /* sort */
 switch ($sortBy.'-'.$sortDir) {
+    case 'publishedon-DESC': case 'publishedon-ASC': break;
     case 'tag-ASC': ksort($tagList); break;
     case 'tag-DESC': krsort($tagList); break;
     case 'count-DESC': asort($tagList); break;
     case 'count-ASC': default: arsort($tagList); break;
+    case 'rand-ASC': case 'random-ASC': case 'rand()-asc': $tagList = $tagLister->ashuffle($tagList); break;
 }
 
 /* iterate */
@@ -134,13 +154,13 @@ foreach ($tagList as $tag => $count) {
     if ($i >= $limit) break;
     $tagCls = $cls.((!empty($altCls) && $i % 2)? ' '.$altCls : '');
     if (!empty($firstCls) && $i == 0) $tagCls .= ' '.$firstCls;
-    if (!empty($lastCls) && $i+1 >= $limit) $tagCls .= ' '.$lastCls;
+    if (!empty($lastCls) && ($i+1 >= $limit || $i == $count)) $tagCls .= ' '.$lastCls;
     /* if tag is currently being viewed, mark as active */
     if (!empty($activeCls) && $tag==$activeTag && (empty($activeKey) || $tv==$activeKey)) $tagCls .= ' '.$activeCls;
     /* handle weighting for css */
     if (!empty($weights) && !empty($weightCls)) $tagCls .= ' '.$weightCls.ceil($count / (max($tagList) / $weights));
 
-    $output[] = $tagLister->getChunk($tpl,array(
+    $tagArray = array(
         'tag' => $tag,
         'tagVar' => $tagVar,
         'tagKey' => $tv,
@@ -149,7 +169,18 @@ foreach ($tagList as $tag => $count) {
         'target' => $target,
         'cls' => $tagCls,
         'idx' => $i,
-    ));
+    );
+    $tagParams = array();
+    if (empty($useTagFurl)) {
+        $tagParams[$tagVar] = $tag;
+        $tagParams[$tagKeyVar] = $tv;
+    }
+    $tagArray['url'] = $modx->makeUrl($target,'',$tagParams);
+    if (!empty($useTagFurl)) {
+        $tagArray['url'] = rtrim($tagArray['url'],'/').'/tags/'.str_replace(' ','+',$tag);
+    }
+
+    $output[] = $tagLister->getChunk($tpl,$tagArray);
     $totalTags += $count;
     $i++;
 }

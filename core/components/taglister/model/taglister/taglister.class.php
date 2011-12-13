@@ -91,4 +91,22 @@ class TagLister {
         return $chunk;
     }
 
+    /**
+     * Shuffle an associative array
+     * 
+     * @param array $list The array to shuffle
+     * @return array The shuffled array
+     */
+    public function ashuffle(array $list = array()) {
+        if (!is_array($list)) return $list;
+
+        $keys = array_keys($list);
+        shuffle($keys);
+        $random = array(); 
+        foreach ($keys as $key) {
+            $random[$key] = $list[$key];
+        }
+
+        return $random;
+    }
 }
