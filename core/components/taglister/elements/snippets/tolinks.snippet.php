@@ -83,7 +83,7 @@ foreach ($items as $item) {
     }
     $itemArray['url'] = $modx->makeUrl($target,'',$params);
     if (!empty($useTagsFurl)) {
-         $itemArray['url'] = rtrim($itemArray['url'],'/').'/tags/'.$itemArray['item'];
+         $itemArray['url'] = rtrim($itemArray['url'],'/').'/'.$tagKey.'/'.$itemArray['item'];
     }
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;

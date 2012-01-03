@@ -58,6 +58,7 @@ $toLower = $modx->getOption('toLower',$scriptProperties,false);
 $weights = $modx->getOption('weights',$scriptProperties,0);
 $weightCls = $modx->getOption('weightCls',$scriptProperties,'');
 $useTagFurl = $modx->getOption('useTagFurl',$scriptProperties,false);
+$furlKey = $modx->getOption('furlKey',$scriptProperties,'tags');
 
 /* parents support */
 $parents = isset($parents) ? explode(',', $parents) : array();
@@ -178,7 +179,7 @@ foreach ($tagList as $tag => $count) {
     }
     $tagArray['url'] = $modx->makeUrl($target,'',$tagParams);
     if (!empty($useTagFurl)) {
-        $tagArray['url'] = rtrim($tagArray['url'],'/').'/'.$tv.'/'.urlencode($tag);
+        $tagArray['url'] = rtrim($tagArray['url'],'/').'/'.(!empty($furlKey) ? $furlKey : $tv).'/'.urlencode($tag);
     }
 
     $output[] = $tagLister->getChunk($tpl,$tagArray);
@@ -196,7 +197,7 @@ if ($all) {
         'count' => $totalTags,
         'target' => $target,
         'cls' => $cls,
-        'url' => $modx->makeUrl($target,'',array(
+        'url' => $useTagFurl ? $modx->makeUrl($target).$tv.'/' : $modx->makeUrl($target,'',array(
             $tagVar => '',
             $tagKeyVar => $tv,
         )),
