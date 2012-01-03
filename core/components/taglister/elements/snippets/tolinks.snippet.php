@@ -44,7 +44,7 @@ $tagKey = $modx->getOption('tagKey',$scriptProperties,'tags');
 $target = !empty($scriptProperties['target']) ? $scriptProperties['target'] : $modx->resource->get('id');
 $tpl = $modx->getOption('tpl',$scriptProperties,'link');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
-$useTagsFurl = $modx->getOption('useTagsFurl',$scriptProperties,false);
+$useTagFurl = $modx->getOption('useTagFurl',$scriptProperties,false);
 
 /* get items */
 $items = $modx->getOption('items',$scriptProperties,'');
@@ -71,7 +71,7 @@ foreach ($items as $item) {
     $itemArray = array();
     $itemArray['item'] = trim($item);
     $params = array();
-    if (empty($useTagsFurl)) {
+    if (empty($useTagFurl)) {
         $params = array(
             $tagRequestParam => $itemArray['item'],
             $tagKeyVar => $tagKey,
@@ -82,10 +82,9 @@ foreach ($items as $item) {
         $params = array_merge($extraParams,$params);
     }
     $itemArray['url'] = $modx->makeUrl($target,'',$params);
-    if (!empty($useTagsFurl)) {
-         $itemArray['url'] = rtrim($itemArray['url'],'/').'/tags/'.$itemArray['item'];
+    if (!empty($useTagFurl)) {
+         $itemArray['url'] = rtrim($itemArray['url'],'/').'/'.$tagKey.'/'.urlencode($itemArray['item']);
     }
-    $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);
 }
