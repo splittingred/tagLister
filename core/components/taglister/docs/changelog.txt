@@ -4,6 +4,7 @@ tagLister 1.1.5
 ===============
 - [#23] Fix issues with useTagFURL support
 - Better handling of all tpl for tagLister snippet
+- [#21] Add in missing pageActiveTpl property to getResourcesTag
 
 tagLister 1.1.3
 ===============

@@ -264,6 +264,14 @@ $properties = array(
         'lexicon' => 'taglister:properties',
     )
     ,array(
+        'name' => 'pageActiveTpl',
+        'desc' => 'prop_grt.pageactivetpl_desc',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '<li[[+activeClasses]]><a[[+activeClasses:default=` class="active"`]][[+title]] href="[[+href]]">[[+pageNo]]</a></li>',
+        'lexicon' => 'taglister:properties',
+    )
+    ,array(
         'name' => 'pageFirstTpl',
         'desc' => 'prop_grt.pagefirsttpl_desc',
         'type' => 'textfield',

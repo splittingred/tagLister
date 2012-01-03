@@ -120,6 +120,7 @@ $_lang['prop_grt.pagefirsttpl_desc'] = 'Content representing the first page navi
 $_lang['prop_grt.pagelasttpl_desc'] = 'Content representing the last page navigation control.';
 $_lang['prop_grt.pageprevtpl_desc'] = 'Content representing the previous page navigation control.';
 $_lang['prop_grt.pagenexttpl_desc'] = 'Content representing the next page navigation control.';
+$_lang['prop_grt.pageactivetpl_desc'] = 'Content representing the current page navigation control.';
 $_lang['prop_grt.tagkey_desc'] = 'The key to set the tags filter by.';
 $_lang['prop_grt.tagkeyvar_desc'] = 'Optional. Name of the REQUEST param key. If exists in the REQUEST - it overrides tagkey. Setting it to empty - it will disable this override.';
 $_lang['prop_grt.tagrequestparam_desc'] = 'The REQUEST param key being sent that will be the value for the tags filter.';
