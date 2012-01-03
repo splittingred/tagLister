@@ -121,6 +121,7 @@ $output = array();
 $tagList = array();
 $encoding = $modx->getOption('modx_charset',$scriptProperties,'UTF-8');
 $useMultibyte = $modx->getOption('use_multibyte',$scriptProperties,false);
+/** @var modTemplateVarResource $tag */
 foreach ($tags as $tag) {
    $v = $tag->get('value');
    $vs = explode($tvDelimiter,$v);
@@ -177,7 +178,7 @@ foreach ($tagList as $tag => $count) {
     }
     $tagArray['url'] = $modx->makeUrl($target,'',$tagParams);
     if (!empty($useTagFurl)) {
-        $tagArray['url'] = rtrim($tagArray['url'],'/').'/tags/'.str_replace(' ','+',$tag);
+        $tagArray['url'] = rtrim($tagArray['url'],'/').'/'.$tv.'/'.urlencode($tag);
     }
 
     $output[] = $tagLister->getChunk($tpl,$tagArray);
@@ -195,6 +196,10 @@ if ($all) {
         'count' => $totalTags,
         'target' => $target,
         'cls' => $cls,
+        'url' => $modx->makeUrl($target,'',array(
+            $tagVar => '',
+            $tagKeyVar => $tv,
+        )),
     ));
     if ($modx->getOption('allPosition',$scriptProperties,'B') == 'T') {
         array_unshift($output,$allChunk);

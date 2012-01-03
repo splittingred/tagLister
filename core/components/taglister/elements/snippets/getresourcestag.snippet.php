@@ -27,6 +27,9 @@
  * Wrap the getPage/getResources call to implement tagging. Needs getPage and
  * getResources to be installed to work.
  *
+ * @var modX $modx
+ * @var array $scriptProperties
+ *
  * @package taglister
  */
 $tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
@@ -47,6 +50,7 @@ if (!empty($tag)) {
         $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'';
     }    
 }
+/** @var modSnippet $elementObj */
 $elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));
 if ($elementObj) {
     $elementObj->setCacheable(false);

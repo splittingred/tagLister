@@ -1,5 +1,10 @@
 Changelog for tagLister.
 
+tagLister 1.1.5
+===============
+- [#23] Fix issues with useTagFURL support
+- Better handling of all tpl for tagLister snippet
+
 tagLister 1.1.3
 ===============
 - [#17] Fix issue with tolinks and key parameter

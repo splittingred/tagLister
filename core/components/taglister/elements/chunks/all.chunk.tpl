@@ -1,1 +1,1 @@
-<li class="[[+cls]]"><a href="[[~[[+target]]? &[[+tagVar]]=`` &[[+tagKeyVar]]=`[[+tagKey]]`]]">[[+tag]]</a> ([[+count]])</li>
+<li class="[[+cls]]"><a href="[[+url]]">[[+tag]]</a> ([[+count]])</li>
