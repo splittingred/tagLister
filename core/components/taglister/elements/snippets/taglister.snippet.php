@@ -26,7 +26,7 @@
 /**
  * tagLister snippet
  *
- * @var modX
+ * @var modX $modx
  * @var TagLister $tagLister
  * @var array $scriptProperties
  *
@@ -51,8 +51,8 @@ $altCls = $modx->getOption('altCls',$scriptProperties,'');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
 $lastCls = $modx->getOption('lastCls',$scriptProperties,'');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'');
-$activeTag = $modx->stripTags(urldecode($_REQUEST[$tagVar]));
-$activeKey = $modx->stripTags(urldecode($_REQUEST[$tagKeyVar]));
+$activeTag = isset($_REQUEST[$tagVar]) ? $modx->stripTags(urldecode($_REQUEST[$tagVar])) : '';
+$activeKey = isset($_REQUEST[$tagKeyVar]) ? $modx->stripTags(urldecode($_REQUEST[$tagKeyVar])) : '';
 $all = $modx->getOption('all',$scriptProperties,false);
 $toLower = $modx->getOption('toLower',$scriptProperties,false);
 $weights = $modx->getOption('weights',$scriptProperties,0);
