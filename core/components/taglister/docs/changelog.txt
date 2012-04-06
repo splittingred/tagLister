@@ -2,6 +2,7 @@ Changelog for tagLister.
 
 tagLister 1.1.7
 ===============
+- [#24] Fix issues with &parents call when no tags are found; better optimize logic
 - [#25] Add within search type for mysql users
 - Fix notice error in tagLister snippet
 

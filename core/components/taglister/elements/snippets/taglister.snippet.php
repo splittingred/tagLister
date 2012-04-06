@@ -60,15 +60,6 @@ $weightCls = $modx->getOption('weightCls',$scriptProperties,'');
 $useTagFurl = $modx->getOption('useTagFurl',$scriptProperties,false);
 $furlKey = $modx->getOption('furlKey',$scriptProperties,'tags');
 
-/* parents support */
-$parents = isset($parents) ? explode(',', $parents) : array();
-$depth = isset($depth) ? (integer) $depth : 10;
-$children = array();
-foreach ($parents as $parent) {
-    $pchildren = $modx->getChildIds($parent, $depth);
-    if (!empty($pchildren)) $children = array_merge($children, $pchildren);
-}
-if (!empty($children)) $parents = array_merge($parents, $children);
 
 /* get TV values */
 $c = $modx->newQuery('modTemplateVarResource');
@@ -83,18 +74,27 @@ if (!empty($tvPk)) {
 } else {
     $c->where(array('TemplateVar.name' => $tv));
 }
+/* parents support */
+$parents = isset($parents) ? explode(',', $parents) : array();
 if (!empty($parents)) {
+    $depth = isset($depth) ? (integer) $depth : 10;
     $children = array();
     foreach ($parents as $parent) {
-        $kids = $modx->getChildIds($parent);
-        foreach ($kids as $kid) {
-            $children[] = $kid;
+        $kids = $modx->getChildIds($parent,$depth);
+        if (!empty($kids)) {
+            $children = array_merge($children,$kids);
         }
     }
-    $children = array_unique($children);
-    $c->where(array(
-        'Resource.id:IN' => $children,
-    ));
+    if (!empty($children)) {
+        $children = array_unique($children);
+        $parents = array_merge($parents,$children);
+    }
+    $parents = array_unique($parents);
+    if (!empty($parents)) {
+        $c->where(array(
+            'Resource.id:IN' => $parents,
+        ));
+    }
 }
 if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
     $c->where(array('Resource.deleted' => 0));
