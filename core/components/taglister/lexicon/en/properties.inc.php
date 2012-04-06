@@ -84,6 +84,7 @@ $_lang['grt.tst_beginswith'] = 'Begins With';
 $_lang['grt.tst_contains'] = 'Contains';
 $_lang['grt.tst_endswith'] = 'Ends With';
 $_lang['grt.tst_exact'] = 'Exact';
+$_lang['grt.tst_within'] = 'Within';
 $_lang['prop_grt.tpl_desc'] = 'Name of a chunk serving as a resource template. NOTE: if not provided, properties are dumped to output for each resource.';
 $_lang['prop_grt.tplodd_desc'] = 'Name of a chunk serving as resource template for resources with an odd idx value (see idx property).';
 $_lang['prop_grt.tplfirst_desc'] = 'Name of a chunk serving as resource template for the first resource (see first property).';

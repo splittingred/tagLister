@@ -46,6 +46,8 @@ if (!empty($tag)) {
         $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'';
     } else if ($tagSearchType == 'endswith') {
         $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'%';
+    } else if ($tagSearchType == 'within') {
+        $scriptProperties['tvFilters'] = $tagKey.'(IN)'.$tag.'';
     } else {
         $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'';
     }    

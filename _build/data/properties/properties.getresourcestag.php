@@ -336,6 +336,7 @@ $properties = array(
             array('text' => 'grt.tst_exact','value' => 'exact'),
             array('text' => 'grt.tst_beginswith','value' => 'beginswith'),
             array('text' => 'grt.tst_endswith','value' => 'endswith'),
+            array('text' => 'grt.tst_within','value' => 'within'),
         ),
         'value' => 'contains',
         'lexicon' => 'taglister:properties',
