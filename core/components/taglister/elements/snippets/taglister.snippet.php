@@ -59,6 +59,7 @@ $weights = $modx->getOption('weights',$scriptProperties,0);
 $weightCls = $modx->getOption('weightCls',$scriptProperties,'');
 $useTagFurl = $modx->getOption('useTagFurl',$scriptProperties,false);
 $furlKey = $modx->getOption('furlKey',$scriptProperties,'tags');
+$ctx = $modx->getOption('ctx',$scriptProperties,$modx->context->key); /* Work with runSnippet in an other CMP */
 
 
 /* get TV values */
@@ -82,7 +83,7 @@ if (!empty($parents)) {
     foreach ($parents as $parent) {
         $kids = $modx->getChildIds($parent,$depth);
         if (!empty($kids)) {
-            $children = array_merge($children,$kids);
+            $children = array_merge($children,$kids,array('context' => $ctx));
         }
     }
     if (!empty($children)) {
