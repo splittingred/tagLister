@@ -37,20 +37,47 @@ $tagKey = (!empty($tagKeyVar) && !empty($_GET[$tagKeyVar]))? $_GET[$tagKeyVar] :
 $tagRequestParam = $modx->getOption('tagRequestParam',$scriptProperties,'tag');
 $grSnippet = $modx->getOption('grSnippet',$scriptProperties,'getPage');
 $tag = $modx->getOption('tag',$scriptProperties,urldecode($_GET[$tagRequestParam]));
-if (!empty($tag)) {
-    $tag = $modx->stripTags($tag);
-    $tagSearchType = $modx->getOption('tagSearchType',$scriptProperties,'exact');
-    if ($tagSearchType == 'contains') {
-        $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'%';
-    } else if ($tagSearchType == 'beginswith') {
-        $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'';
-    } else if ($tagSearchType == 'endswith') {
-        $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'%';
-    } else if ($tagSearchType == 'within') {
-        $scriptProperties['tvFilters'] = $tagKey.'(IN)'.$tag.'';
-    } else {
-        $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'';
-    }    
+$tags = explode(',', $tag);
+if (is_array($tags)) {
+    foreach($tags as $tagItem) {
+        if (!empty($tagItem)) {
+            $tagItem = $modx->stripTags($tagItem);
+            $tagSearchType = $modx->getOption('tagSearchType',$scriptProperties,'exact');
+            if (!isset($scriptProperties['tvFilters'])) {
+                $scriptProperties['tvFilters'] = '';
+            }
+            if (!empty($scriptProperties['tvFilters'])) {
+                $scriptProperties['tvFilters'] .= '||';
+            }
+            if ($tagSearchType == 'contains') {
+                $scriptProperties['tvFilters'] .= $tagKey.'==%'.$tagItem.'%';
+            } else if ($tagSearchType == 'beginswith') {
+                $scriptProperties['tvFilters'] .= $tagKey.'==%'.$tagItem.'';
+            } else if ($tagSearchType == 'endswith') {
+                $scriptProperties['tvFilters'] .= $tagKey.'=='.$tagItem.'%';
+            } else if ($tagSearchType == 'within') {
+                $scriptProperties['tvFilters'] .= $tagKey.'(IN)'.$tagItem.'';
+            } else {
+                $scriptProperties['tvFilters'] .= $tagKey.'=='.$tagItem.'';
+            }    
+        }
+    }
+} else {
+    if (!empty($tag)) {
+        $tag = $modx->stripTags($tag);
+        $tagSearchType = $modx->getOption('tagSearchType',$scriptProperties,'exact');
+        if ($tagSearchType == 'contains') {
+            $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'%';
+        } else if ($tagSearchType == 'beginswith') {
+            $scriptProperties['tvFilters'] = $tagKey.'==%'.$tag.'';
+        } else if ($tagSearchType == 'endswith') {
+            $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'%';
+        } else if ($tagSearchType == 'within') {
+            $scriptProperties['tvFilters'] = $tagKey.'(IN)'.$tag.'';
+        } else {
+            $scriptProperties['tvFilters'] = $tagKey.'=='.$tag.'';
+        }    
+    }
 }
 /** @var modSnippet $elementObj */
 $elementObj = $modx->getObject('modSnippet', array('name' => $grSnippet));
