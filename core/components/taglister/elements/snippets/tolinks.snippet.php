@@ -46,6 +46,9 @@ $tpl = $modx->getOption('tpl',$scriptProperties,'link');
 $cls = $modx->getOption('cls',$scriptProperties,'tl-tag');
 $useTagsFurl = $modx->getOption('useTagsFurl',$scriptProperties,false);
 
+/* link scheme */
+$scheme = $modx->getOption('link_tag_scheme',null,-1);
+
 /* get items */
 $items = $modx->getOption('items',$scriptProperties,'');
 if (empty($items)) return '';
@@ -81,7 +84,7 @@ foreach ($items as $item) {
     if (!empty($extraParams)) {
         $params = array_merge($extraParams,$params);
     }
-    $itemArray['url'] = $modx->makeUrl($target,'',$params);
+    $itemArray['url'] = $modx->makeUrl($target,'',$params,$scheme);
     if (!empty($useTagsFurl)) {
          $itemArray['url'] = rtrim($itemArray['url'],'/').'/'.$tagKey.'/'.$itemArray['item'];
     }
