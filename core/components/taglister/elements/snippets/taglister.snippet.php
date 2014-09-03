@@ -102,6 +102,9 @@ if (!$modx->getOption('includeDeleted',$scriptProperties,false)) {
 if (!$modx->getOption('includeUnpublished',$scriptProperties,false)) {
     $c->where(array('Resource.published' => 1));
 }
+
+$c->where(array('Resource.context_key' => $modx->getOption('context',$scriptProperties,'web')));
+
 /* json where support */
 $where = $modx->getOption('where',$scriptProperties,'');
 if (!empty($where)) {
