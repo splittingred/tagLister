@@ -46,6 +46,7 @@ $tagKeyVar = $modx->getOption('tagKeyVar',$scriptProperties,'key');
 $limit = $modx->getOption('limit',$scriptProperties,10);
 $sortBy = strtolower($modx->getOption('sortBy',$scriptProperties,'count'));
 $sortDir = strtoupper($modx->getOption('sortDir',$scriptProperties,'ASC'));
+$exclude = $modx->getOption('exclude',$scriptProperties,'');
 $cls = $modx->getOption('cls',$scriptProperties,'');
 $altCls = $modx->getOption('altCls',$scriptProperties,'');
 $firstCls = $modx->getOption('firstCls',$scriptProperties,'');
@@ -122,6 +123,7 @@ $output = array();
 $tagList = array();
 $encoding = $modx->getOption('modx_charset',$scriptProperties,'UTF-8');
 $useMultibyte = $modx->getOption('use_multibyte',$scriptProperties,false);
+if($exclude) { $exclude = explode(',',$exclude); }
 /** @var modTemplateVarResource $tag */
 foreach ($tags as $tag) {
    $v = $tag->get('value');
@@ -129,6 +131,9 @@ foreach ($tags as $tag) {
    foreach ($vs as $key) {
       $key = trim($key);
       if (empty($key)) continue;
+      if($exclude){
+          if(in_array($key,$exclude)) continue;
+      }
       if ($toLower) { /* allow for case-insensitive filtering */
           $key = $useMultibyte ? mb_strtolower($key,$encoding) : strtolower($key);
       }
