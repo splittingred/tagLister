@@ -67,8 +67,10 @@ if (!empty($extraParams)) {
 
 /* iterate */
 $tags = array();
+$i=1;
 foreach ($items as $item) {
     $itemArray = array();
+	$itemArray['itemId'] = $i;
     $itemArray['item'] = trim($item);
     $params = array();
     if (empty($useTagsFurl)) {
@@ -88,6 +90,7 @@ foreach ($items as $item) {
     $itemArray['url'] = str_replace(' ','+',$itemArray['url']);
     $itemArray['cls'] = $cls;
     $tags[] = $tagLister->getChunk($tpl,$itemArray);
+	$i++;
 }
 
 /* output */
